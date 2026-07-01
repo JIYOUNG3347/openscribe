@@ -7,7 +7,11 @@ action items — with an LLM. You choose the STT engine (Whisper, NVIDIA Riva, o
 summarization model (local Ollama or OpenAI).
 
 <p align="center">
-  <img src="docs/images/03-result.png" width="880" alt="OpenScribe — transcript and generated notes side by side">
+  <img src="docs/images/demo.gif" width="820" alt="OpenScribe — from the landing page to the dashboard">
+</p>
+
+<p align="center">
+  <img src="docs/images/03-result.png" width="820" alt="transcript and generated notes side by side">
 </p>
 
 ## Features
