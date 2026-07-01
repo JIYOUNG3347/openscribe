@@ -7,7 +7,7 @@ action items — with an LLM. You choose the STT engine (Whisper, NVIDIA Riva, o
 summarization model (local Ollama or OpenAI).
 
 <p align="center">
-  <img src="docs/images/demo.gif" width="820" alt="OpenScribe — from the landing page to the dashboard">
+  <img src="docs/images/demo.gif" width="820" alt="OpenScribe — a tour of the landing page">
 </p>
 
 <p align="center">

@@ -6,7 +6,7 @@
 STT 엔진(Whisper / NVIDIA Riva / NAVER CLOVA)과 요약 모델(로컬 Ollama / OpenAI)을 골라 쓸 수 있습니다.
 
 <p align="center">
-  <img src="docs/images/demo.gif" width="820" alt="OpenScribe — 시작 화면에서 대시보드까지">
+  <img src="docs/images/demo.gif" width="820" alt="OpenScribe — 메인 화면 둘러보기">
 </p>
 
 <p align="center">
