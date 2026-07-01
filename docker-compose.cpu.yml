@@ -1,0 +1,10 @@
+# GPU 없는 환경용 override — GPU 예약 제거(Whisper/Ollama가 CPU로 동작, 느림).
+#   docker compose -f docker-compose.yml -f docker-compose.cpu.yml up -d
+# (Docker Compose v2.24+ 의 !reset 태그 사용)
+name: openscribe
+
+services:
+  backend:
+    deploy: !reset null
+  ollama:
+    deploy: !reset null

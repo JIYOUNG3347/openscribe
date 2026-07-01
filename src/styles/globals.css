@@ -1,0 +1,325 @@
+@import "tailwindcss";
+
+/* =========================================================================
+   OpenScribe Design System — Warm Coffeehouse (Starbucks 계열)
+   따뜻한 크림 캔버스 + 그린 브랜드 + 풀-필 버튼. 라이트/다크 듀얼 토큰.
+   라이트=크림(#f2f0eb)/그린(#00754A), 다크=하우스그린(#1E3932) 기반.
+
+   Tailwind 유틸리티 매핑 (자주 쓰는 것):
+     배경    bg-canvas / bg-surface / bg-subtle / bg-muted
+     보더    border-line / border-line-strong / border-accent
+     텍스트  text-ink / text-ink-soft / text-ink-faint
+     액센트  bg-accent / bg-accent-hover / bg-accent-active / bg-accent-subtle
+             text-accent / text-accent-ink / border-accent-border
+     시맨틱  {success|warning|danger|info} / {…}-subtle
+     화자    text-spk-1..6 / bg-spk-1..6
+     라운드  rounded-control(6) / rounded-card(10) / rounded-full
+     그림자  shadow-card / shadow-pop / shadow-modal
+     포커스  focus-ring (클래스)
+   ========================================================================= */
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ── Raw tokens — Light (doc 토큰명 그대로) ─────────────────────────────── */
+:root {
+  /* 따뜻한 크림 캔버스 — 카페 재질 톤 (차가운 흰색 금지) */
+  --bg-canvas: #f2f0eb;   /* Neutral Warm — 페이지 캔버스 */
+  --bg-surface: #ffffff;  /* 카드/모달 흰 표면 */
+  --bg-subtle: #edebe9;   /* Ceramic — 존 구분 워시 */
+  --bg-muted: #e6e2da;    /* 더 짙은 따뜻한 회베이지 */
+  --border-default: #e2ddd2;
+  --border-strong: #cdc7ba;
+  --text-primary: #1c1b18;   /* 따뜻한 잉크(≈ rgba(0,0,0,.87)) */
+  --text-secondary: #57544c;
+  --text-tertiary: #8a877c;
+
+  /* 그린 4단 — Accent(CTA)=00754A, Starbucks=006241, House=1E3932 */
+  --accent: #00754a;        /* Green Accent — 주 CTA/브랜드 */
+  --accent-hover: #006241;  /* Starbucks Green — hover */
+  --accent-active: #1e3932; /* House Green — press */
+  --accent-subtle: #d4e9e2; /* Green Light — 틴트 */
+  --accent-border: #a9d4c6;
+  --accent-text: #00754a;
+  --accent-ring: rgba(0, 117, 74, 0.30);
+
+  --success: #1d7a4e;
+  --success-subtle: #e1efe8;
+  --warning: #9a6a12;       /* 따뜻한 골드-앰버 */
+  --warning-subtle: #f5ecd7;
+  --danger: #c82014;        /* Starbucks Red */
+  --danger-subtle: #fbe7e4;
+  --info: #18707a;          /* 차분한 teal */
+  --info-subtle: #e1eef0;
+
+  /* 화자 — 따뜻한 6색 (그린/골드/테라코타/로즈/플럼/틸) */
+  --spk-1: #00754a;
+  --spk-2: #a87b2c;
+  --spk-3: #c2710c;
+  --spk-4: #b34a73;
+  --spk-5: #7a5e9c;
+  --spk-6: #2c7d72;
+
+  /* tooltip — 하우스그린 표면 / 크림 글자 */
+  --tooltip-bg: #1e3932;
+  --tooltip-fg: #f3f1ea;
+
+  /* shadows — whisper-soft 2겹, 따뜻한 잉크 틴트 */
+  --shadow-sm: 0 1px 2px rgba(20, 18, 12, 0.06), 0 1px 3px rgba(20, 18, 12, 0.05);
+  --shadow-md: 0 2px 6px rgba(20, 18, 12, 0.08), 0 8px 16px rgba(20, 18, 12, 0.08);
+  --shadow-lg: 0 8px 16px rgba(20, 18, 12, 0.10), 0 20px 40px rgba(20, 18, 12, 0.16);
+
+  --font-sans-stack: "Pretendard Variable", Pretendard, Inter, -apple-system,
+    "Apple SD Gothic Neo", "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+  --font-mono-stack: "JetBrains Mono", "SFMono-Regular", ui-monospace, Menlo,
+    Consolas, monospace;
+}
+
+/* ── Raw tokens — Dark (1급 시민) ──────────────────────────────────────── */
+[data-theme="dark"] {
+  /* 하우스그린(#1E3932) 기반 다크 — 에스프레소 톤 */
+  --bg-canvas: #14201c;   /* 깊은 그린-블랙 */
+  --bg-surface: #1e3932;  /* House Green — 카드 표면 */
+  --bg-subtle: #24443b;
+  --bg-muted: #2b5148;    /* Green Uplift */
+  --border-default: #2f4b42;
+  --border-strong: #3c5d53;
+  --text-primary: #f1efe8;  /* 따뜻한 크림 글자 */
+  --text-secondary: #b4bfb9;
+  --text-tertiary: #82918a;
+
+  --accent: #4cb98d;        /* 다크에서 밝은 그린 */
+  --accent-hover: #5fc79b;
+  --accent-active: #3da37a;
+  --accent-subtle: #1c3b31;
+  --accent-border: #2f6a54;
+  --accent-text: #6fcaa6;
+  --accent-ring: rgba(76, 185, 141, 0.40);
+
+  --success: #46c98a;
+  --success-subtle: #142c20;
+  --warning: #d8b878;       /* 골드 */
+  --warning-subtle: #2c2413;
+  --danger: #e8675c;
+  --danger-subtle: #2e1714;
+  --info: #4db8c2;
+  --info-subtle: #112a2d;
+
+  --spk-1: #5fc79b;
+  --spk-2: #d8b878;
+  --spk-3: #e0902f;
+  --spk-4: #e07ba0;
+  --spk-5: #b095d6;
+  --spk-6: #4db8a8;
+
+  --tooltip-bg: #2b5148;
+  --tooltip-fg: #f1efe8;
+
+  /* dark: 그림자 거의 빼고 표면 밝기로 깊이 */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* ── Tailwind theme mapping (inline → data-theme 전환 시 자동 반영) ─────── */
+@theme inline {
+  --color-canvas: var(--bg-canvas);
+  --color-surface: var(--bg-surface);
+  --color-subtle: var(--bg-subtle);
+  --color-muted: var(--bg-muted);
+
+  --color-line: var(--border-default);
+  --color-line-strong: var(--border-strong);
+
+  --color-ink: var(--text-primary);
+  --color-ink-soft: var(--text-secondary);
+  --color-ink-faint: var(--text-tertiary);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-active: var(--accent-active);
+  --color-accent-subtle: var(--accent-subtle);
+  --color-accent-border: var(--accent-border);
+  --color-accent-ink: var(--accent-text);
+
+  --color-success: var(--success);
+  --color-success-subtle: var(--success-subtle);
+  --color-warning: var(--warning);
+  --color-warning-subtle: var(--warning-subtle);
+  --color-danger: var(--danger);
+  --color-danger-subtle: var(--danger-subtle);
+  --color-info: var(--info);
+  --color-info-subtle: var(--info-subtle);
+
+  --color-spk-1: var(--spk-1);
+  --color-spk-2: var(--spk-2);
+  --color-spk-3: var(--spk-3);
+  --color-spk-4: var(--spk-4);
+  --color-spk-5: var(--spk-5);
+  --color-spk-6: var(--spk-6);
+
+  --color-tooltip: var(--tooltip-bg);
+
+  --font-sans: var(--font-sans-stack);
+  --font-mono: var(--font-mono-stack);
+
+  --radius-control: 8px;
+  --radius-card: 12px;
+  --radius-palette: 14px;
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: var(--font-sans-stack);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* 한글 가독성: 음수 자간 금지 */
+  letter-spacing: 0;
+}
+
+::selection {
+  background: var(--accent-subtle);
+  color: var(--accent-text);
+}
+
+/* 라틴 헤딩에만 절제된 트래킹 (한글엔 0 유지) */
+h1, h2, h3 {
+  letter-spacing: -0.01em;
+}
+
+/* 숫자/타임스탬프는 tabular */
+.tabular,
+.font-mono {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Focus ring (도구다운 크리스프함) ─────────────────────────────────── */
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-ring);
+}
+.focus-ring {
+  outline: none;
+}
+
+/* ── Elevation ────────────────────────────────────────────────────────── */
+.shadow-card { box-shadow: var(--shadow-sm); }
+.shadow-pop { box-shadow: var(--shadow-md); }
+.shadow-modal { box-shadow: var(--shadow-lg); }
+/* 위로 향한 플레이어 바 그림자 */
+.shadow-player { box-shadow: 0 -4px 12px rgba(16, 24, 40, 0.08); }
+[data-theme="dark"] .shadow-player { box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.5); }
+
+/* ── 상태 dot 펄스 (processing) ───────────────────────────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.pulse-dot {
+  animation: pulse-dot 1.4s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* ── line-clamp ───────────────────────────────────────────────────────── */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── 읽는 텍스트(회의록 본문): 줄높이 1.7 ────────────────────────────── */
+.prose {
+  color: var(--text-primary);
+  font-size: 15px;
+  line-height: 1.7;
+}
+.prose h1,
+.prose h2,
+.prose h3 {
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+.prose h1 { font-size: 1.375rem; }
+.prose h2 { font-size: 1.125rem; }
+.prose h3 { font-size: 0.9375rem; }
+.prose p { margin-top: 0.75rem; margin-bottom: 0.75rem; }
+.prose ul,
+.prose ol { margin-top: 0.75rem; margin-bottom: 0.75rem; padding-left: 1.5rem; }
+.prose li { margin-top: 0.25rem; margin-bottom: 0.25rem; }
+.prose strong { font-weight: 600; color: var(--text-primary); }
+.prose code {
+  background-color: var(--bg-muted);
+  color: var(--accent-text);
+  padding: 0.125rem 0.3rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-family: var(--font-mono-stack);
+}
+.prose-sm { font-size: 0.875rem; }
+
+/* ── 화자 칩: 색 텍스트 + 같은 색 12% 틴트 ──────────────────────────── */
+.speaker-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--spk);
+  background-color: color-mix(in srgb, var(--spk) 12%, transparent);
+}
+.speaker-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background-color: var(--spk);
+}
+
+/* ── 파형 막대 (시그니처) ─────────────────────────────────────────────── */
+.wave-bar {
+  background-color: var(--border-strong);
+  border-radius: 9999px;
+  transition: background-color 0.12s ease;
+}
+.wave-bar.played {
+  background-color: var(--accent);
+}

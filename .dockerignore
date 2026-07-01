@@ -1,0 +1,7 @@
+# Frontend build context (.) — keep it lean.
+# 주의: 원본/UI frontend Dockerfile 이 필요로 하는 nginx.conf·src·config 는 제외하지 말 것.
+node_modules
+build
+backend
+.git
+.venv

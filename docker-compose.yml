@@ -1,0 +1,81 @@
+# ──────────────────────────────────────────────────────────────────────────
+# OpenScribe — 전체 스택. 한 번에:
+#   docker compose up -d --build      (또는 bash setup.sh)
+#   docker exec openscribe-ollama ollama pull gemma3:4b   # 회의록 LLM 모델
+# GPU(NVIDIA + nvidia-container-toolkit) 필요. GPU 없으면:
+#   docker compose -f docker-compose.yml -f docker-compose.cpu.yml up -d
+# ──────────────────────────────────────────────────────────────────────────
+name: openscribe
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: openscribe-frontend
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "3000:80"
+    networks:
+      - openscribe-net
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: openscribe-backend
+    environment:
+      - DATABASE_URL=sqlite+aiosqlite:////app/data/openscribe.db
+      - LLM_BASE_URL=http://ollama:11434/v1
+      - LLM_MODEL=gemma3:4b
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - RIVA_SERVER=riva-speech:50051        # 별도 Riva 서버 사용 시
+      - HUGGING_FACE_TOKEN=${HF_TOKEN:-}     # Whisper 화자분리(pyannote) 사용 시
+    volumes:
+      - openscribe-data:/app/data            # SQLite/업로드 영속
+      - hf-cache:/root/.cache/huggingface    # Whisper/pyannote 모델 캐시
+    ports:
+      - "8000:8000"
+    networks:
+      - openscribe-net
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')\" || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 24
+      start_period: 20s
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia      # Whisper STT 를 GPU 로 (필요 시점에만 VRAM 할당)
+              count: 1
+              capabilities: [gpu]
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: openscribe-ollama
+    volumes:
+      - ollama-data:/root/.ollama
+    expose:
+      - "11434"
+    networks:
+      - openscribe-net
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+networks:
+  openscribe-net:
+    driver: bridge
+
+volumes:
+  openscribe-data:
+  ollama-data:
+  hf-cache:

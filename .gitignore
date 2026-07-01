@@ -1,0 +1,32 @@
+# OpenScribe — local / build artifacts
+
+# node / vite
+node_modules/
+build/
+dist/
+*.local
+
+# python / backend runtime
+__pycache__/
+*.py[cod]
+backend/.venv/
+.venv/
+backend/data/
+backend/seed/
+data/
+*.db
+*.sqlite
+
+# secrets / env
+.env
+.env.*
+!.env.example
+
+# model / cache artifacts
+*.gguf
+hf-cache/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

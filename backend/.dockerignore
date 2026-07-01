@@ -1,0 +1,10 @@
+# Backend build context (./backend) — exclude local/dev artifacts & seed mount target.
+.venv/
+data/
+seed/
+__pycache__/
+**/__pycache__/
+*.pyc
+*.db
+*.sqlite
+.pytest_cache/
